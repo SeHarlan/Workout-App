@@ -6,7 +6,7 @@ import Workouts from './pages/Workouts';
 function App() {
   return (
     <div className="App">
-      <Workouts/>
+      <Workouts />
     </div>
   );
 }
