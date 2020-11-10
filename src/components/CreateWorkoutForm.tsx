@@ -1,7 +1,9 @@
 import React, { useState, FormEvent, ChangeEvent, useEffect } from 'react'
-import { addWorkout } from '../graphQL/workoutMutations'
+import { addWorkoutGQL } from '../graphQL/workoutMutations'
 import NumberInput from './NumberInput'
 import TextInput from './TextInput'
+import { useDispatch } from 'react-redux'
+import { addWorkout } from '../redux/actions'
 
 const getInitState = (newWorkoutPosition = 1) => ({
   name: '',
@@ -14,7 +16,8 @@ const getInitState = (newWorkoutPosition = 1) => ({
 
 export default function CreateWorkoutForm({ newWorkoutPosition, userID }: { newWorkoutPosition: number, userID: number }) {
   const [formState, setFormState] = useState(getInitState(newWorkoutPosition))
-  const [submitted, setSubmited] = useState(false)
+
+  const dispatch = useDispatch()
 
   useEffect(() => {
     setFormState(prev => ({
@@ -28,13 +31,9 @@ export default function CreateWorkoutForm({ newWorkoutPosition, userID }: { newW
     event.preventDefault()
     if (formState.name === "") return
 
-    setSubmited(true);
+    dispatch(addWorkout(userID, newWorkoutPosition, formState))
 
-    const { id } = await addWorkout(userID, newWorkoutPosition, formState);
-
-    if (id) setFormState(getInitState(newWorkoutPosition));
-
-    setSubmited(false);
+    setFormState(getInitState(newWorkoutPosition));
   }
 
   const handleChange = (event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => {
@@ -58,6 +57,6 @@ export default function CreateWorkoutForm({ newWorkoutPosition, userID }: { newW
     <br />
     <NumberInput name="position" onChange={handleChange} value={formState.position} />
     <br />
-    <button disabled={submitted}>Save</button>
+    <button>Save</button>
   </form>)
 }

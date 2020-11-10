@@ -2,7 +2,7 @@ import { makeGraphQLCall } from './helpers'
 import { workoutInterface } from './interfaces';
 
 export function fetchWorkouts(userID: number) {
-  console.log('fetch srtarted with id', userID)
+  console.log('fetch started with id', userID)
   const query = `
     query {
       workouts(userID: ${userID}) {

@@ -1,5 +1,15 @@
 [
   {
+    "id": -1,
+    "userID": 1,
+    "name": "Error",
+    "description": "Error Loading Workouts",
+    "heavy": 0,
+    "medium": 0,
+    "light": 0,
+    "position": 0
+  },
+  {
     "id": 1,
     "userID": 1,
     "name": "test name",

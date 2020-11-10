@@ -12,5 +12,4 @@ export const makeGraphQLCall = (query: string, returnKey: keyof graphqlResponseI
   return fetch(graphqlURL, makeHeaders(query))
     .then(res => res.json())
     .then(({ data }: graphqlResponseInterface) => data[returnKey])
-    .catch(err => console.log(err))
 }
