@@ -1,5 +1,5 @@
 import { makeGraphQLCall } from './helpers'
-import { workoutInterface, workoutFormInterface, shiftInputInterface } from './interfaces';
+import { workoutInterface, workoutFormInterface } from './interfaces';
 
 export function deleteWorkoutGQL(workoutID: number) {
   const query = `
@@ -74,10 +74,10 @@ export function updateWorkoutGQL({
     .then(workout => workout as workoutInterface)
 }
 
-export function shiftWorkoutGQL({
-  workoutID,
-  newPosition
-}: shiftInputInterface) {
+export function shiftWorkoutGQL(
+  workoutID: number,
+  newPosition: number
+) {
   const query = `
       mutation {
         shiftWorkout(workoutID: ${workoutID}, newPosition: ${newPosition}) {

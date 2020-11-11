@@ -3,7 +3,7 @@ import { addWorkoutGQL } from '../graphQL/workoutMutations'
 import NumberInput from './NumberInput'
 import TextInput from './TextInput'
 import { useDispatch } from 'react-redux'
-import { addWorkout } from '../redux/actions'
+import { addWorkout } from '../redux/actions/workoutActions'
 
 const getInitState = (newWorkoutPosition = 1) => ({
   name: '',

@@ -3,17 +3,20 @@ import { workoutInterface } from '../graphQL/interfaces'
 import DeleteButton from './DeleteButton'
 import NumberInput from './NumberInput'
 import TextInput from './TextInput'
+import { useDispatch } from 'react-redux'
+import { editWorkout } from '../redux/actions/workoutActions'
 
 
 export default function EditWorkoutItem({ workout, setEditID }: { workout: workoutInterface, setEditID: Function }) {
   const [editForm, setEditForm] = useState({ ...workout })
 
-  const handleSave = async () => {
-    console.log(editForm)
-    //await updateWorkout
+  const dispatch = useDispatch()
 
-    // if position changed
-    //shiftWorkout
+  const handleSave = async () => {
+    const shiftBool = editForm.position !== workout.position
+    dispatch(editWorkout(editForm, shiftBool))
+
+    setEditID(null)
   }
 
   const handleChange = (event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => {
@@ -25,7 +28,6 @@ export default function EditWorkoutItem({ workout, setEditID }: { workout: worko
   }
 
   const handleDiscardChanges = () => {
-    // setEditForm({ ...workout })
     setEditID(null)
   }
 

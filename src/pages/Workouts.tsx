@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import WorkoutList from '../components/WorkoutList'
 
 import CreateWorkoutForm from '../components/CreateWorkoutForm'
-import { setWorkouts } from '../redux/actions'
+import { setWorkouts } from '../redux/actions/workoutActions'
 import { useDispatch, useSelector } from 'react-redux'
 import { getWorkouts } from '../redux/selectors'
 

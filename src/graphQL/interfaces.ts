@@ -6,7 +6,8 @@ export interface workoutInterface {
   heavy: number,
   medium: number,
   light: number,
-  position: number
+  position: number,
+  temp?: boolean
 }
 
 export interface workoutFormInterface {
@@ -26,9 +27,4 @@ export interface graphqlResponseInterface {
     deleteWorkout: workoutInterface,
     updateWorkout: workoutInterface,
   }
-}
-
-export interface shiftInputInterface {
-  workoutID: number,
-  newPosition: number
 }
