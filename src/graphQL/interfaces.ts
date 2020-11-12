@@ -8,6 +8,7 @@ export interface workoutInterface {
   light: number,
   position: number,
   temp?: boolean
+  errMessgae?: string
 }
 
 export interface workoutFormInterface {

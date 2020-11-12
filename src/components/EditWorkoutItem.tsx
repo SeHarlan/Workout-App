@@ -1,10 +1,10 @@
 import React, { useState, ChangeEvent } from 'react'
 import { workoutInterface } from '../graphQL/interfaces'
-import DeleteButton from './DeleteButton'
 import NumberInput from './NumberInput'
 import TextInput from './TextInput'
-import { useDispatch } from 'react-redux'
-import { editWorkout } from '../redux/actions/workoutActions'
+import { useDispatch, useSelector } from 'react-redux'
+import { editWorkout, deleteWorkout } from '../redux/actions/workoutActions'
+import { getMaxWorkoutPosition } from '../redux/selectors'
 
 
 export default function EditWorkoutItem({ workout, setEditID }: { workout: workoutInterface, setEditID: Function }) {
@@ -12,10 +12,20 @@ export default function EditWorkoutItem({ workout, setEditID }: { workout: worko
 
   const dispatch = useDispatch()
 
-  const handleSave = async () => {
+  const handleDelete = () => {
+    dispatch(deleteWorkout(workout))
+
+    setEditID(null)
+  }
+
+  const handleSave = () => {
     const shiftBool = editForm.position !== workout.position
     dispatch(editWorkout(editForm, shiftBool))
+    setEditForm({ ...workout })
+    setEditID(null)
+  }
 
+  const handleDiscardChanges = () => {
     setEditID(null)
   }
 
@@ -25,10 +35,6 @@ export default function EditWorkoutItem({ workout, setEditID }: { workout: worko
       ...prev,
       [name]: value
     }))
-  }
-
-  const handleDiscardChanges = () => {
-    setEditID(null)
   }
 
   return (
@@ -43,10 +49,10 @@ export default function EditWorkoutItem({ workout, setEditID }: { workout: worko
       <br />
       <NumberInput name="light" onChange={handleChange} value={editForm.light} />
       <br />
-      <NumberInput name="position" onChange={handleChange} value={editForm.position} />
+      <NumberInput name="position" onChange={handleChange} value={editForm.position} max={useSelector(getMaxWorkoutPosition) - 1} />
       <br />
 
-      <DeleteButton workoutID={workout.id} />
+      <button onClick={handleDelete}>Delete</button>
       <button onClick={handleSave}>Save</button>
       <button onClick={handleDiscardChanges}>Discard Changes</button>
     </li>

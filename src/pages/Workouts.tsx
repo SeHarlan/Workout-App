@@ -19,7 +19,7 @@ export default function Workouts() {
 
 
   return (<main>
-    <CreateWorkoutForm newWorkoutPosition={workouts?.length + 1} userID={userID} />
+    <CreateWorkoutForm userID={userID} />
     <WorkoutList workouts={workouts} />
   </main>)
 }

@@ -1,9 +1,9 @@
 import React, { useState, FormEvent, ChangeEvent, useEffect } from 'react'
-import { addWorkoutGQL } from '../graphQL/workoutMutations'
 import NumberInput from './NumberInput'
 import TextInput from './TextInput'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { addWorkout } from '../redux/actions/workoutActions'
+import { getMaxWorkoutPosition } from '../redux/selectors'
 
 const getInitState = (newWorkoutPosition = 1) => ({
   name: '',
@@ -14,26 +14,28 @@ const getInitState = (newWorkoutPosition = 1) => ({
   position: newWorkoutPosition,
 })
 
-export default function CreateWorkoutForm({ newWorkoutPosition, userID }: { newWorkoutPosition: number, userID: number }) {
-  const [formState, setFormState] = useState(getInitState(newWorkoutPosition))
+export default function CreateWorkoutForm({ userID }: { userID: number }) {
+  const maxLength = useSelector(getMaxWorkoutPosition)
+
+  const [formState, setFormState] = useState(getInitState(maxLength))
 
   const dispatch = useDispatch()
 
   useEffect(() => {
     setFormState(prev => ({
       ...prev,
-      position: newWorkoutPosition
+      position: maxLength
     }))
-  }, [newWorkoutPosition])
+  }, [maxLength])
 
 
   const handleSave = async (event: FormEvent) => {
     event.preventDefault()
     if (formState.name === "") return
 
-    dispatch(addWorkout(userID, newWorkoutPosition, formState))
+    dispatch(addWorkout(userID, formState))
 
-    setFormState(getInitState(newWorkoutPosition));
+    setFormState(getInitState(maxLength));
   }
 
   const handleChange = (event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => {
@@ -55,7 +57,7 @@ export default function CreateWorkoutForm({ newWorkoutPosition, userID }: { newW
     <br />
     <NumberInput name="light" onChange={handleChange} value={formState.light} />
     <br />
-    <NumberInput name="position" onChange={handleChange} value={formState.position} />
+    <NumberInput name="position" onChange={handleChange} value={formState.position} max={useSelector(getMaxWorkoutPosition)} />
     <br />
     <button>Save</button>
   </form>)

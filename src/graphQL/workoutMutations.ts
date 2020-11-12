@@ -19,7 +19,7 @@ export function deleteWorkoutGQL(workoutID: number) {
     .then(workout => workout as workoutInterface)
 }
 
-export function addWorkoutGQL(userID: number, newWorkoutPosition: number, {
+export function addWorkoutGQL(userID: number, {
   name,
   description,
   heavy,
@@ -27,10 +27,6 @@ export function addWorkoutGQL(userID: number, newWorkoutPosition: number, {
   light,
   position
 }: workoutFormInterface) {
-
-  if (position >= newWorkoutPosition) {
-    position = newWorkoutPosition
-  }
 
   const query = `
       mutation {

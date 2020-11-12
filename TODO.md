@@ -1,4 +1,4 @@
-1. delete action
-1. test position shift with new items, it doesnt seems to be resetting to array order
+1. delete needs to shift everything after it down a position
+1. test multipple shift changes, numbers seem to be changing to often when shifted up
 1. deploy
 1. CSS as BEM
